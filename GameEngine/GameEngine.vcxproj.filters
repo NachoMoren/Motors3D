@@ -258,6 +258,9 @@
     <ClInclude Include="MathGeoLib\include\Time\Clock.h">
       <Filter>Externals\MathGeoLib\Time</Filter>
     </ClInclude>
+    <ClInclude Include="glmath.h">
+      <Filter>Externals\MathGeoLib</Filter>
+    </ClInclude>
     <ClInclude Include="ImGui\imconfig.h">
       <Filter>Externals\ImGui</Filter>
     </ClInclude>
@@ -276,17 +279,17 @@
     <ClInclude Include="ImGui\imstb_truetype.h">
       <Filter>Externals\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="glmath.h">
-      <Filter>Externals\MathGeoLib</Filter>
-    </ClInclude>
     <ClInclude Include="ImGui\backends\imgui_impl_opengl3.h">
       <Filter>Externals\ImGui\Backends</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\backends\imgui_impl_opengl3_loader.h">
       <Filter>Externals\ImGui\Backends</Filter>
     </ClInclude>
-    <ClInclude Include="ImGui\backends\imgui_impl_sdl.h">
+    <ClInclude Include="ImGui\backends\imgui_impl_sdl2.h">
       <Filter>Externals\ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEditor.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -419,6 +422,9 @@
     <ClCompile Include="MathGeoLib\include\Time\Clock.cpp">
       <Filter>Externals\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="glmath.cpp">
+      <Filter>Externals\MathGeoLib</Filter>
+    </ClCompile>
     <ClCompile Include="ImGui\imgui.cpp">
       <Filter>Externals\ImGui</Filter>
     </ClCompile>
@@ -434,14 +440,14 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Externals\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="glmath.cpp">
-      <Filter>Externals\MathGeoLib</Filter>
-    </ClCompile>
     <ClCompile Include="ImGui\backends\imgui_impl_opengl3.cpp">
       <Filter>Externals\ImGui\Backends</Filter>
     </ClCompile>
-    <ClCompile Include="ImGui\backends\imgui_impl_sdl.cpp">
+    <ClCompile Include="ImGui\backends\imgui_impl_sdl2.cpp">
       <Filter>Externals\ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEditor.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
