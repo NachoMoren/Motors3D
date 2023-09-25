@@ -22,8 +22,9 @@ bool ModuleEditor::Init()
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+    
     //io.ConfigViewportsNoAutoMerge = true;
     //io.ConfigViewportsNoTaskBarIcon = true;
 
@@ -43,17 +44,21 @@ bool ModuleEditor::Init()
     ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
     ImGui_ImplOpenGL3_Init();
 
-	return false;
+	return true;
 }
 
 void ModuleEditor::DrawEditor()
 {
    
-    ImGui::Begin("Test");
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
 
-    ImGui::End();
+    ImGui::ShowDemoWindow();
 
+    // Rendering
     ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 }
 
@@ -64,9 +69,7 @@ bool ModuleEditor::CleanUp()
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
-    SDL_GL_DeleteContext(App->renderer3D->context);
-
-	return false;
+	return true;
 }
 
 void ModuleEditor::AddFPS(const float aFPS)

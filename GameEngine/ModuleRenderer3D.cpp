@@ -135,7 +135,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
 
+	App->editor->DrawEditor();
+
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
