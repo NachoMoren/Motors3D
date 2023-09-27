@@ -62,6 +62,7 @@ int main(int argc, char ** argv)
 
 			if (update_return == UPDATE_STOP)
 				state = MAIN_FINISH;
+
 		}
 			break;
 

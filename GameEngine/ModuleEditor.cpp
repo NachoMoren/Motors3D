@@ -22,7 +22,7 @@ bool ModuleEditor::Init()
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
     
     //io.ConfigViewportsNoAutoMerge = true;
@@ -47,19 +47,52 @@ bool ModuleEditor::Init()
 	return true;
 }
 
-void ModuleEditor::DrawEditor()
+bool ModuleEditor::DrawEditor()
 {
    
+    bool ret = true;
+
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
+    // Demo Menu
     ImGui::ShowDemoWindow();
 
+    // MainMenuBar
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Import")) {}
+            if (ImGui::MenuItem("Close", "Ctrl+Q")) { ret = false; } // <-- Exit Code
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Edit"))
+        {
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Select"))
+        {
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("About")) { ImGui::Text("We lit"); }
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
+
+    ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLogSize, 0, (const char *)0, 300, 50, ImVec2(300, 50));
+    ImGui::DragInt("Graph size", &mFPSLogSize, 0.5f, 1, 100);
+    
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+    return ret;
 }
 
 bool ModuleEditor::CleanUp()
@@ -74,4 +107,12 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::AddFPS(const float aFPS)
 {
+    if (mFPSLog.size() >= mFPSLogSize) {
+        mFPSLog.erase(mFPSLog.begin());
+
+    }
+   
+    mFPSLog.push_back(aFPS);
+   
+
 }

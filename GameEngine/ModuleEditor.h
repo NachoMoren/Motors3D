@@ -15,12 +15,13 @@ public:
 
 	bool Init() override;
 
-	void DrawEditor();
+	bool DrawEditor();
 	bool CleanUp() override;
 
 	void AddFPS(const float aFPS);
 
 	std::vector<float> mFPSLog;
+	int mFPSLogSize = 50;
 };
 
 #endif //MODULE_EDITOR
