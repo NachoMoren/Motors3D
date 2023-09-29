@@ -19,9 +19,15 @@ public:
 	bool CleanUp() override;
 
 	void AddFPS(const float aFPS);
+	void AddLog();
+
+private:
 
 	std::vector<float> mFPSLog;
 	int mFPSLogSize = 50;
+
+	std::vector<const char*> mConsoleLog;
+
 };
 
 #endif //MODULE_EDITOR
