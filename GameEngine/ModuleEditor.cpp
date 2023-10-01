@@ -89,11 +89,17 @@ bool ModuleEditor::DrawEditor()
 
     ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLogSize, 0, (const char *)0, 300, 50, ImVec2(300, 50));
     ImGui::DragInt("Graph size", &mFPSLogSize, 0.5f, 1, 100);
-    AddLog();
-    for (int i = 0; i < mConsoleLog.size(); i++) {
-        ImGui::Text(mConsoleLog[i]);
 
+    // Console Window
+    if (ImGui::Begin("Console")) {
+        AddLog();
+        for (int i = 0; i < mConsoleLog.size(); i++) {
+            ImGui::Text(mConsoleLog[i]);
+
+        }
+        ImGui::End();
     }
+    
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -129,6 +135,6 @@ void ModuleEditor::AddLog()
         mConsoleLog.erase(mConsoleLog.begin());
 
     }
-    const char* tmp_string = GET_LOG();
-    mConsoleLog.push_back(tmp_string);
+    mConsoleLog = GET_LOG();
+    //mConsoleLog.push_back(tmp_string);
 }
