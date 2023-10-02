@@ -43,9 +43,6 @@
     <Filter Include="Externals\ImGui\Backends">
       <UniqueIdentifier>{1619f8ae-f317-452d-a062-50ce3667669b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Externals\Glew">
-      <UniqueIdentifier>{1109c0c5-f458-47b5-bfa9-fedf3fac4922}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -293,18 +290,6 @@
     </ClInclude>
     <ClInclude Include="ModuleEditor.h">
       <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Glew\include\eglew.h">
-      <Filter>Externals\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="Glew\include\glew.h">
-      <Filter>Externals\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="Glew\include\glxew.h">
-      <Filter>Externals\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="Glew\include\wglew.h">
-      <Filter>Externals\Glew</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

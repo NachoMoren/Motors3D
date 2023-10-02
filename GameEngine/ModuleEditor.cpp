@@ -87,7 +87,7 @@ bool ModuleEditor::DrawEditor()
 
   
 
-    ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLogSize, 0, (const char *)0, 300, 50, ImVec2(300, 50));
+    ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLogSize);
     ImGui::DragInt("Graph size", &mFPSLogSize, 0.5f, 1, 100);
 
     // Console Window

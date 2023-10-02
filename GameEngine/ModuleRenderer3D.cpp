@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+
+#include "Glew/Include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -48,6 +50,9 @@ bool ModuleRenderer3D::Init()
 	
 	if(ret == true)
 	{
+		// Initialize Glew
+		glewInit();
+
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
@@ -117,6 +122,10 @@ bool ModuleRenderer3D::Init()
 
 	Grid.axis = true;
 
+	glLineWidth(2.0f);
+
+	
+
 	return ret;
 }
 
@@ -142,6 +151,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
+
+	// Direct Mode Draw 
+	/*glBegin(GL_LINES);
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(0.f, 10.f, 0.f);
+	glEnd();
+	glLineWidth(1.0f);*/
 
 	if (!App->editor->DrawEditor()) { return UPDATE_STOP; }
 
