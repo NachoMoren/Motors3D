@@ -25,6 +25,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	void Draw();
+
 public:
 
 	Light lights[MAX_LIGHTS];
