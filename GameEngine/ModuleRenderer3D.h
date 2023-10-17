@@ -10,6 +10,9 @@
 //todo: REMOVE this before 1st delivery!!
 #include "glmath.h"
 
+
+#include "MeshRenderer.h"
+
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module
@@ -25,8 +28,6 @@ public:
 
 	void OnResize(int width, int height);
 
-	void Draw();
-
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -35,4 +36,7 @@ public:
 	
 	//You won't need this after using Frustum
 	mat4x4 ProjectionMatrix;
+
+	//tes tvar
+	MeshRenderer* mRenderer;
 };

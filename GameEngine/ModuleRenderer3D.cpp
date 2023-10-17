@@ -7,7 +7,6 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-#include "FileImporter.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glu32.lib") /* link Microsoft OpenGL lib   */
@@ -126,6 +125,10 @@ bool ModuleRenderer3D::Init()
 
 	glLineWidth(2.0f);
 
+	mRenderer = new MeshRenderer();
+	mRenderer->LoadMesh("../Assets/BakerHouse.fbx");
+	mRenderer->FillBuffers();
+
 
 	return ret;
 }
@@ -153,14 +156,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
 
-	// Direct Mode Draw 
-	/*glBegin(GL_LINES);
-	glVertex3f(0.f, 0.f, 0.f);
-	glVertex3f(0.f, 10.f, 0.f);
-	glEnd();
-	glLineWidth(1.0f);*/
-
-	Draw();
+	mRenderer->DrawMeshes();
 
 	if (!App->editor->DrawEditor()) { return UPDATE_STOP; }
 
@@ -193,11 +189,4 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-}
-
-void ModuleRenderer3D::Draw()
-{
-
-
-
 }

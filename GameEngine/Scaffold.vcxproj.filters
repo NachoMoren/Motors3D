@@ -294,6 +294,9 @@
     <ClInclude Include="FileImporter.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -453,6 +456,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="FileImporter.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

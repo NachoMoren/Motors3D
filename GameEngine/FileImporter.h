@@ -13,27 +13,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-struct VertexData {
 
-	uint idIndex = 0; // index in VRAM
-	uint numIndex = 0;
-	uint* index = nullptr;
-	uint idVertex = 0; // unique vertex in VRAM
-	uint numVertex = 0;
-	float* vertex = nullptr;
-};
 
-class FileImporter {
-public:
-
-	void LoadFile(const char* filePath);
-
-	void LoadToMemory(uint id);
-
-private:
-
-	std::vector<VertexData*> meshArray;
-};
 
 
 
