@@ -1,5 +1,7 @@
 #include "MeshRenderer.h"
 
+#include "glmath.h"
+
 void MeshRenderer::LoadMesh(const char* filePath) {
 
 	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -78,4 +80,29 @@ void MeshRenderer::DrawMeshes() {
 
 	}
 
+	//DrawNormals();
+
+}
+
+void MeshRenderer::DrawNormals() {
+
+	for (int i = 0; i < meshArray.size(); ++i) {
+
+		int x, y, z;
+		int nX, nY, nZ;
+
+		x = meshArray.at(i)->vertex[(sizeof(float) * meshArray.at(i)->numVertex * 3)];
+		y = meshArray.at(i)->vertex[(sizeof(float) * meshArray.at(i)->numVertex * 3) + 1];
+		z = meshArray.at(i)->vertex[(sizeof(float) * meshArray.at(i)->numVertex * 3) + 2];
+
+		nX = x / sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+		nY = y / sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+		nZ = z / sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+
+		glBegin(GL_LINES);
+		glVertex3f(x,y,z);
+		glVertex3f(nX, nY, nZ);
+		glEnd();
+
+	}
 }

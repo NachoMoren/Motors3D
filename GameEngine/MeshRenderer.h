@@ -34,6 +34,8 @@ public:
 
 	void DrawMeshes();
 
+	void DrawNormals();
+
 private:
 
 	std::vector<Mesh*> meshArray;
