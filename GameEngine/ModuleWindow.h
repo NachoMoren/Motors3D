@@ -20,12 +20,24 @@ public:
 
 	void SetTitle(const char* title);
 
+	void UpdateSize();
+	void UpdateFlags();
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
 
+	int width, height;
+
+	Uint32 flags;
+
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
+
+	bool isFullscreen;
+	bool isResizable;
+	bool isBorderless;
+	bool IsFullDesktop;
 };
 
 #endif // __ModuleWindow_H__

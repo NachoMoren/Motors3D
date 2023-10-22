@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 
+#include "ModuleWindow.h"
+
 #include "ImGui/imgui.h"
 #include "ImGui//backends/imgui_impl_sdl2.h"
 #include "ImGui//backends/imgui_impl_opengl3.h"
@@ -85,11 +87,6 @@ bool ModuleEditor::DrawEditor()
         ImGui::EndMainMenuBar();
     }
 
-  
-
-    ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLogSize);
-    ImGui::DragInt("Graph size", &mFPSLogSize, 0.5f, 1, 100);
-
     // Console Window
     if (ImGui::Begin("Console")) {
         AddLog();
@@ -99,6 +96,9 @@ bool ModuleEditor::DrawEditor()
         }
         ImGui::End();
     }
+
+    //Config
+    Configuration();
     
     // Rendering
     ImGui::Render();
@@ -137,4 +137,74 @@ void ModuleEditor::AddLog()
     }
     mConsoleLog = GET_LOG();
     //mConsoleLog.push_back(tmp_string);
+}
+
+void ModuleEditor::Configuration()
+{
+
+    if (ImGui::Begin("Configuration")) {
+
+        if (ImGui::CollapsingHeader("Application")) {
+
+            ImGui::NewLine();
+            ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLogSize);
+            ImGui::DragInt("Graph size", &mFPSLogSize, 0.5f, 1, 100);
+            ImGui::NewLine();
+
+        }
+        if (ImGui::CollapsingHeader("LevelManager")) {
+
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("Window")) {
+
+            ImGui::NewLine();
+            if (ImGui::DragInt("Width", &App->window->width)) {
+                App->window->UpdateSize();
+            }
+            if (ImGui::DragInt("Height", &App->window->height)) {
+                App->window->UpdateSize();
+            }
+            if (ImGui::Checkbox("FullScreen", &App->window->isFullscreen)) {
+
+            }
+            if (ImGui::Checkbox("Resizable", &App->window->isResizable)) {
+
+            }
+            if (ImGui::Checkbox("Borderless", &App->window->isBorderless)) {
+
+            }
+            if (ImGui::Checkbox("FullDesktop", &App->window->IsFullDesktop)) {
+
+            }
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("Renderer")) {
+
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("Camera")) {
+
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("Textures")) {
+
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("Audio")) {
+
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("Physics")) {
+            
+            ImGui::NewLine();
+        }
+        if (ImGui::CollapsingHeader("FileSystem")) {
+
+            ImGui::NewLine();
+        }
+
+        ImGui::End();
+    }
+
 }
