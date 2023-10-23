@@ -21,6 +21,8 @@ public:
 	void AddFPS(const float aFPS);
 	void AddLog();
 
+	void Configuration();
+
 private:
 
 	std::vector<float> mFPSLog;
