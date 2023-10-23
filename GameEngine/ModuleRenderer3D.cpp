@@ -116,6 +116,7 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -129,6 +130,16 @@ bool ModuleRenderer3D::Init()
 	mRenderer->LoadMesh("../Assets/BakerHouse.fbx");
 	mRenderer->FillBuffers();
 
+
+	//Temp: Crea
+	CheckerTexture();
+
+	tImporter = new TextureImporter();
+	tImporter->InitDevil();
+	//checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
+
+	
+	
 
 	return ret;
 }
@@ -154,10 +165,23 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	glBindTexture(GL_TEXTURE_2D, 0);
 	Grid.Render();
 
-	mRenderer->DrawMeshes();
+	glBindTexture(GL_TEXTURE_2D, checkerTexture);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -1.0, 0.0);
+	glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 1.0, 0.0);
+	glTexCoord2f(1.0, 1.0); glVertex3f(0.0, 1.0, 0.0);
+	glTexCoord2f(1.0, 0.0); glVertex3f(0.0, -1.0, 0.0);
 
+	glTexCoord2f(0.0, 0.0); glVertex3f(1.0, -1.0, 0.0);
+	glTexCoord2f(0.0, 1.0); glVertex3f(1.0, 1.0, 0.0);
+	glTexCoord2f(1.0, 1.0); glVertex3f(2.41421, 1.0, -1.41421);
+	glTexCoord2f(1.0, 0.0); glVertex3f(2.41421, -1.0, -1.41421);
+	glEnd();
+	mRenderer->DrawMeshes();
+	glBindTexture(GL_TEXTURE_2D, 0);
 	if (!App->editor->DrawEditor()) { return UPDATE_STOP; }
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -170,6 +194,7 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	SDL_GL_DeleteContext(context);
 
 	return true;
@@ -189,4 +214,26 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void ModuleRenderer3D::CheckerTexture()
+{
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}	
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &checkerTexture);
+	glBindTexture(GL_TEXTURE_2D, checkerTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 }

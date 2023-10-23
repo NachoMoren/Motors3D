@@ -12,8 +12,12 @@
 
 
 #include "MeshRenderer.h"
+#include "TextureImporter.h"
 
 #define MAX_LIGHTS 8
+
+#define CHECKERS_HEIGHT 64
+#define CHECKERS_WIDTH 64
 
 class ModuleRenderer3D : public Module
 {
@@ -27,6 +31,7 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+	void CheckerTexture(); 
 
 public:
 
@@ -39,4 +44,13 @@ public:
 
 	//tes tvar
 	MeshRenderer* mRenderer;
+
+	TextureImporter* tImporter; 
+
+	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	GLuint checkerTexture;
+
+	uint frameBuffer; 
+	uint colorBuffer; 
+	uint renderBuffer; 
 };

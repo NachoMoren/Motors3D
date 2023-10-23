@@ -315,6 +315,9 @@
     <ClInclude Include="ComponentTransform.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="TextureImporter.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -490,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureImporter.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
