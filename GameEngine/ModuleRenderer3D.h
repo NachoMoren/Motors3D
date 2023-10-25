@@ -32,6 +32,7 @@ public:
 
 	void OnResize(int width, int height);
 	void CheckerTexture(); 
+	void DrawCheckersCube();
 
 public:
 
