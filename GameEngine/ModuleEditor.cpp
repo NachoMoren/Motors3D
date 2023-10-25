@@ -86,6 +86,9 @@ bool ModuleEditor::DrawEditor()
 
         ImGui::EndMainMenuBar();
     }
+    else {
+        ImGui::End();
+    }
 
     // Console Window
     if (ImGui::Begin("Console")) {
@@ -94,6 +97,9 @@ bool ModuleEditor::DrawEditor()
             ImGui::Text(mConsoleLog[i]);
 
         }
+        ImGui::End();
+    }
+    else {
         ImGui::End();
     }
 
@@ -204,6 +210,9 @@ void ModuleEditor::Configuration()
             ImGui::NewLine();
         }
 
+        ImGui::End();
+    }
+    else {
         ImGui::End();
     }
 
