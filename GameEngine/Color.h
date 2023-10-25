@@ -1,6 +1,6 @@
 
 #pragma once
-
+#include "ImGui/imgui.h"
 struct Color
 {
 	float r, g, b, a;

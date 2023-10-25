@@ -23,9 +23,20 @@ public:
 
 	void Configuration();
 
-private:
+	ImVec4 ColToImVec(const Color& color);
 
+	const char* GetSystemData();
+
+	int GetUsage();
+	int GetBudget();
+	int GetReserved();
+	int GetAvailable();
+	
+
+private:
+	SDL_version version; 
 	std::vector<float> mFPSLog;
+	std::string systemData; 
 	int mFPSLogSize = 50;
 
 	std::vector<const char*> mConsoleLog;

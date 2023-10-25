@@ -172,16 +172,28 @@ void ModuleEditor::Configuration()
                 App->window->UpdateSize();
             }
             if (ImGui::Checkbox("FullScreen", &App->window->isFullscreen)) {
-
+                if(App->window->isFullscreen)
+                    SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN);
+                else
+                    SDL_SetWindowFullscreen(App->window->window, 0);
             }
             if (ImGui::Checkbox("Resizable", &App->window->isResizable)) {
-
+                if (App->window->isResizable)
+                    SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_RESIZABLE);
+                else
+                    SDL_SetWindowFullscreen(App->window->window, 0);
             }
             if (ImGui::Checkbox("Borderless", &App->window->isBorderless)) {
-
+                if(App->window->isBorderless)
+                    SDL_SetWindowBordered(App->window->window, SDL_FALSE);
+                else
+                    SDL_SetWindowBordered(App->window->window, SDL_TRUE);
             }
             if (ImGui::Checkbox("FullDesktop", &App->window->IsFullDesktop)) {
-
+                if(App->window->IsFullDesktop)
+                    SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+                else
+                    SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_RESIZABLE);
             }
             ImGui::NewLine();
         }
@@ -209,6 +221,56 @@ void ModuleEditor::Configuration()
 
             ImGui::NewLine();
         }
+        if (ImGui::CollapsingHeader("Hardware/Software status")) {
+            ImGui::Text("SDL Version:");
+            ImGui::SameLine(); 
+            ImGui::TextColored(ColToImVec(Green), "%d.%d.%d", version.major, version.minor, version.patch);
+
+            ImGui::Separator();
+
+            ImGui::Text("CPU's: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%d", SDL_GetCPUCount());
+
+            ImGui::Text("System RAM: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), " %d Gb", SDL_GetSystemRAM());
+            ImGui::Separator();
+
+            ImGui::Text("System Data: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%s", GetSystemData());
+            ImGui::Separator();
+
+            ImGui::Text("GPU: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%s", glGetString(GL_RENDERER));
+
+            ImGui::Text("Brand: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%s", glGetString(GL_VENDOR));
+
+            ImGui::Text("Version: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%s", glGetString(GL_VERSION));
+
+            ImGui::Text("VRAM Budget:");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%i Mb", GetBudget());
+
+            ImGui::Text("VRAM Usage:");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%i Mb", GetUsage());
+
+            ImGui::Text("VRAM Available:");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%i Mb", GetAvailable());
+
+            ImGui::Text("VRAM Reserved:");
+            ImGui::SameLine();
+            ImGui::TextColored(ColToImVec(Green), "%i Mb", GetReserved());
+
+        }
 
         ImGui::End();
     }
@@ -217,3 +279,93 @@ void ModuleEditor::Configuration()
     }
 
 }
+
+ImVec4 ModuleEditor::ColToImVec(const Color& color) {
+    return ImVec4(color.r, color.g, color.b, color.a);
+}
+
+const char* ModuleEditor::GetSystemData() {
+    systemData.clear();
+    if (SDL_Has3DNow())
+    {
+        systemData.append("3D Now, ");
+    }
+
+    if (SDL_HasAVX())
+    {
+        systemData.append("AVX, ");
+    }
+
+    if (SDL_HasAVX2())
+    {
+        systemData.append("AVX2, ");
+    }
+
+    if (SDL_HasAltiVec())
+    {
+        systemData.append("AltiVec, ");
+    }
+
+    if (SDL_HasMMX())
+    {
+        systemData.append("MMX, ");
+    }
+
+    if (SDL_HasRDTSC())
+    {
+        systemData.append("RDTSC, ");
+    }
+
+    if (SDL_HasSSE())
+    {
+        systemData.append("SSE, ");
+    }
+
+    if (SDL_HasSSE2())
+    {
+        systemData.append("SSE2, ");
+    }
+
+    if (SDL_HasSSE3())
+    {
+        systemData.append("SSE3, ");
+    }
+
+    if (SDL_HasSSE41())
+    {
+        systemData.append("SSE41, ");
+    }
+
+    if (SDL_HasSSE41())
+    {
+        systemData.append("SSE42");
+    }
+
+    return systemData.data();
+}
+
+int ModuleEditor::GetUsage() {
+    int usage;
+    glGetIntegerv(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX, &usage);
+    return usage / 1024.0f;
+}
+
+int ModuleEditor::GetAvailable() {
+    int available;
+    glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &available);
+    return available / 1024.0f;
+}
+
+int ModuleEditor::GetBudget() {
+    int budget;
+    glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &budget);
+    return budget / 1024.0f;
+}
+
+
+int ModuleEditor::GetReserved() {
+    int reserved;
+    glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTED_MEMORY_NVX, &reserved);
+    return reserved / 1024.0f;
+}
+
