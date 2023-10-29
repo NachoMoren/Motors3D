@@ -136,7 +136,7 @@ bool ModuleRenderer3D::Init()
 
 	tImporter = new TextureImporter();
 	tImporter->InitDevil();
-	//checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
+	checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
 
 	
 	
