@@ -10,6 +10,7 @@
 ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
+	dropped = false; 
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
 }
@@ -119,6 +120,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break; 
 			case SDL_DROPFILE:
 				dropped_filedir = e.drop.file; 
+				dropped = true; 
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped on window", dropped_filedir, App->window->window);
 				SDL_free(dropped_filedir); 
 				break; 

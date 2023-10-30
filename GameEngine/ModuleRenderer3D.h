@@ -33,6 +33,7 @@ public:
 	void OnResize(int width, int height);
 	void CheckerTexture(); 
 	void DrawCheckersCube();
+	void DragAndDrop(std::string path);
 
 public:
 
@@ -50,8 +51,11 @@ public:
 
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 	GLuint checkerTexture;
+	GLuint textureID; 
 
 	uint frameBuffer; 
 	uint colorBuffer; 
 	uint renderBuffer; 
+
+	bool drawCheckersCube; 
 };

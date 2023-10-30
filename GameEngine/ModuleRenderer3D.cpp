@@ -137,7 +137,7 @@ bool ModuleRenderer3D::Init()
 	tImporter->InitDevil();
 	checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
 
-	
+	drawCheckersCube = false; 
 	
 
 	return ret;
@@ -168,7 +168,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	Grid.Render();
 
 	glBindTexture(GL_TEXTURE_2D, checkerTexture);
-	DrawCheckersCube();
+	if (drawCheckersCube) {
+		DrawCheckersCube();
+	}
+	if (App->input->dropped) {
+		DragAndDrop(App->input->dropped_filedir);
+		App->input->dropped = false; 
+	}
 	mRenderer->DrawMeshes();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	if (!App->editor->DrawEditor()) { return UPDATE_STOP; }
@@ -188,7 +194,6 @@ bool ModuleRenderer3D::CleanUp()
 
 	return true;
 }
-
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
@@ -270,4 +275,24 @@ void ModuleRenderer3D::DrawCheckersCube()
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
 	glEnd();
 
+}
+
+void ModuleRenderer3D::DragAndDrop(std::string path)
+{
+	std::string extension = path.substr(path.find_last_of(".") + 1);
+
+	if (extension == "fbx" || extension == "FBX") {
+
+		mRenderer->LoadMesh(App->input->dropped_filedir);
+		mRenderer->FillBuffers();
+		return;
+	}
+	else if (extension == "png" || extension == "PNG") {
+		textureID = tImporter->ImportTexture(App->input->dropped_filedir);
+		return;
+	}
+	else if (extension == "dds" || extension == "DDS") {
+
+		return;
+	}
 }

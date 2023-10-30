@@ -198,7 +198,8 @@ void ModuleEditor::Configuration()
             ImGui::NewLine();
         }
         if (ImGui::CollapsingHeader("Renderer")) {
-
+            ImGui::NewLine();
+            ImGui::Checkbox("Cube Checkers", &App->renderer3D->drawCheckersCube);
             ImGui::NewLine();
         }
         if (ImGui::CollapsingHeader("Camera")) {
