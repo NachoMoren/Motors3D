@@ -35,7 +35,7 @@ void MeshRenderer::LoadMesh(const char* filePath) {
 					}
 				}
 			}
-
+			
 			meshArray.push_back(meshData); // PushBack vertexStruct in mesh array
 		}
 

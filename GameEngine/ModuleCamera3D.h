@@ -6,7 +6,12 @@
 
 //todo: REMOVE this before 1st delivery!!
 #include "glmath.h"
+enum class CamState {
+	FLYING, 
+	FOCUS, 
+	NORMAL, 
 
+};
 class ModuleCamera3D : public Module
 {
 public:

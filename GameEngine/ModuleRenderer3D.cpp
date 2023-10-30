@@ -116,7 +116,6 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -136,7 +135,7 @@ bool ModuleRenderer3D::Init()
 
 	tImporter = new TextureImporter();
 	tImporter->InitDevil();
-	//checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
+	checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
 
 	
 	
@@ -217,15 +216,22 @@ void ModuleRenderer3D::CheckerTexture()
 			checkerImage[i][j][3] = (GLubyte)255;
 		}
 	}	
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, &checkerTexture);
 	glBindTexture(GL_TEXTURE_2D, checkerTexture);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
 }
 
 void ModuleRenderer3D::DrawCheckersCube()
