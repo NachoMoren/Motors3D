@@ -1,6 +1,40 @@
 #include "MeshRenderer.h"
-
+#include "Application.h"
 #include "glmath.h"
+#include "Globals.h"
+#include "ModuleRenderer3D.h"
+#pragma comment (lib, "Assimp/libx86/assimp.lib")
+#include "ImGui/backends/imgui_impl_sdl2.h"
+#include "Primitive.h"
+
+MeshRenderer::MeshRenderer(Application* app, bool start_enabled) : Module(app, start_enabled)
+{
+
+}
+
+// Destructor
+MeshRenderer::~MeshRenderer()
+{}
+
+bool MeshRenderer::Start()
+{
+	LOG("Creating 3D Renderer context");
+	bool ret = true;
+
+	return ret;
+}
+
+bool MeshRenderer::CleanUp()
+{
+	LOG("Deleting 3D Render");
+	//Delete Meshes array
+	for (int i = 0; i < meshArray.size(); i++) {
+		delete meshArray[i];
+		meshArray[i] = nullptr;
+	}
+	meshArray.clear();
+	return true;
+}
 
 void MeshRenderer::LoadMesh(const char* filePath) {
 
@@ -10,12 +44,22 @@ void MeshRenderer::LoadMesh(const char* filePath) {
 
 		for (int i = 0; i < scene->mNumMeshes; i++) {
 
-			Mesh* meshData = new Mesh;
+			Mesh* meshData = new Mesh();
 
 			// copy vertices
 			meshData->numVertex = scene->mMeshes[i]->mNumVertices;
-			meshData->vertex = new float[meshData->numVertex * 3];
-			memcpy(meshData->vertex, scene->mMeshes[i]->mVertices, sizeof(float) * meshData->numVertex * 3);
+			meshData->vertex = new float[meshData->numVertex * 5];
+
+			for (int k = 0; k < meshData->numVertex; k++) {
+				meshData->vertex[k * 5] = scene->mMeshes[i]->mVertices[k].x;
+				meshData->vertex[k * 5 + 1] = scene->mMeshes[i]->mVertices[k].y;
+				meshData->vertex[k * 5 + 2] = scene->mMeshes[i]->mVertices[k].z;
+
+				meshData->vertex[k * 5 + 3] = scene->mMeshes[i]->mTextureCoords[0][k].x;
+				meshData->vertex[k * 5 + 4] = scene->mMeshes[i]->mTextureCoords[0][k].y;
+
+			}
+
 			LOG("New mesh with %d vertices", meshData->numVertex);
 
 			// copy faces
@@ -34,10 +78,15 @@ void MeshRenderer::LoadMesh(const char* filePath) {
 
 					}
 				}
+
 			}
-			
+			FillBuffers(meshData);
 			meshArray.push_back(meshData); // PushBack vertexStruct in mesh array
+			
+
+
 		}
+	
 
 		aiReleaseImport(scene);
 	}
@@ -48,40 +97,54 @@ void MeshRenderer::LoadMesh(const char* filePath) {
 
 }
 
-void MeshRenderer::FillBuffers() {
+void MeshRenderer::FillBuffers(Mesh* mesh) {
 
-	for (int i = 0; i < meshArray.size(); ++i) {
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glGenBuffers(1, (GLuint*)&(mesh->idVertex));
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->idVertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->numVertex * 5, mesh->vertex, GL_STATIC_DRAW);
 
-		glGenBuffers(1, (GLuint*)&(meshArray.at(i)->VBO));
-		glBindBuffer(GL_ARRAY_BUFFER, meshArray.at(i)->VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * meshArray.at(i)->numVertex * 3, meshArray.at(i)->vertex, GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*)&(mesh->idIndex));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->idIndex);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->numIndex, mesh->index, GL_STATIC_DRAW);
 
-		glGenBuffers(1, (GLuint*)&(meshArray.at(i)->EBO));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshArray.at(i)->EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * meshArray.at(i)->numIndex * 3, meshArray.at(i)->index, GL_STATIC_DRAW);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	}
 }
 
-void MeshRenderer::DrawMeshes() {
+void MeshRenderer::DrawMesh(Mesh* mesh) {
 
-	for (int i = 0; i < meshArray.size(); ++i) {
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
 
-		glBindBuffer(GL_ARRAY_BUFFER, meshArray[i]->VBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshArray[i]->EBO);
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 0, NULL);
-		glDrawElements(GL_TRIANGLES, meshArray[i]->numIndex, GL_UNSIGNED_INT, NULL);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->idVertex);
+	glVertexPointer(3, GL_FLOAT, sizeof(float) * 5, NULL);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(float) * 5, (void*)(sizeof(float) * 3));
+	
+	//glBindTexture(GL_TEXTURE_2D, mesh->textureID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->idIndex);
+	glDrawElements(GL_TRIANGLES, mesh->numIndex, GL_UNSIGNED_INT, NULL);
 
-	}
+	glDisableClientState(GL_VERTEX_ARRAY);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_COORD_ARRAY);
 
 	//DrawNormals();
 
+}
+
+void MeshRenderer::DrawMeshes()
+{
+	for (int i = 0; i < meshArray.size(); i++) {
+		DrawMesh(meshArray[i]);
+	}
 }
 
 void MeshRenderer::DrawNormals() {
