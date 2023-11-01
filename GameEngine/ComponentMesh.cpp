@@ -7,3 +7,9 @@ ComponentMesh::ComponentMesh(GameObject* owner) : Component(ComponentType::MESH,
 ComponentMesh::~ComponentMesh()
 {
 }
+
+void ComponentMesh::OnInspector()
+{
+
+
+}

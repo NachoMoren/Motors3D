@@ -2,7 +2,7 @@
 
 #include "Component.h"
 
-#include "glmath.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 class ComponentTransform : public Component {
 public:
@@ -10,16 +10,14 @@ public:
 	ComponentTransform(GameObject* owner);
 	~ComponentTransform();
 
-	void OnGui() override {
-
-	}
+	void OnInspector() override;
 
 private:
 
-	mat4x4 matrix;
+	float4x4 matrix;
 
-	vec3 position;
-	vec3 rotation;
-	vec3 scale;
+	float3 position;
+	float3 rotation;
+	float3 scale;
 
 };

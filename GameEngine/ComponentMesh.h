@@ -9,9 +9,7 @@ public:
 	ComponentMesh(GameObject* owner);
 	~ComponentMesh();
 
-	void OnGui() override {
-
-	}
+	void OnInspector() override;
 
 private:
 

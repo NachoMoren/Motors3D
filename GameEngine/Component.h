@@ -3,6 +3,10 @@
 #include "Globals.h"
 #include <string>
 
+#include "ImGui/imgui.h"
+#include "ImGui//backends/imgui_impl_sdl2.h"
+#include "ImGui//backends/imgui_impl_opengl3.h"
+
 class GameObject;
 
 enum class ComponentType {
@@ -33,31 +37,7 @@ public:
 
 	virtual void Update() {};
 
-	Component* CreateComponent(ComponentType type, GameObject* owner) {
-
-		/*Component* component = nullptr;
-
-		switch (type)
-		{
-		case ComponentType::UNKNOWN:
-			break;
-		case ComponentType::TRANSFORM:
-			component = new ComponentTransform(owner);
-			break;
-		case ComponentType::MESH:
-			component = new ComponentMesh(owner);
-			break;
-		case ComponentType::MATERIAL:
-			break;
-		case ComponentType::LIGHT:
-			break;
-		default:
-			break;
-		}*/
-	}
-
-
-	virtual void OnGui() {}; //Override
+	virtual void OnInspector() {};
 
 public:
 
