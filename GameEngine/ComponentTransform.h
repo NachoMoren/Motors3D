@@ -7,7 +7,7 @@
 class ComponentTransform : public Component {
 public:
 
-	ComponentTransform(std::string name, GameObject* owner);
+	ComponentTransform(GameObject* owner);
 	~ComponentTransform();
 
 	void OnGui() override {

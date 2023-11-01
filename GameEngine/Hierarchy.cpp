@@ -1,3 +1,9 @@
 #include "Globals.h"
 
-//class Hierarchy
+class Hierarchy {
+public:
+
+private:
+
+
+};
