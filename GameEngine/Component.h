@@ -17,17 +17,44 @@ enum class ComponentType {
 class Component {
 public:
 
-	Component(std::string name, ComponentType type, GameObject* owner) : _name(name), _type(type), _owner(owner)  {};
+	Component(ComponentType type, GameObject* owner) : _type(type), _owner(owner)  {
+	
+		_name = "";
+		active = true;
+	};
 	Component() {
 
 	};
 
 	~Component() {};
 
-	virtual void Enable() {};
-	virtual void Disable() {};
+	void Enable() { active = true; };
+	void Disable() { active = false; };
 
 	virtual void Update() {};
+
+	Component* CreateComponent(ComponentType type, GameObject* owner) {
+
+		/*Component* component = nullptr;
+
+		switch (type)
+		{
+		case ComponentType::UNKNOWN:
+			break;
+		case ComponentType::TRANSFORM:
+			component = new ComponentTransform(owner);
+			break;
+		case ComponentType::MESH:
+			component = new ComponentMesh(owner);
+			break;
+		case ComponentType::MATERIAL:
+			break;
+		case ComponentType::LIGHT:
+			break;
+		default:
+			break;
+		}*/
+	}
 
 
 	virtual void OnGui() {}; //Override

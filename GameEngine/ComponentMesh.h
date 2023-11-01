@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Component.h"
+#include "MeshRenderer.h"
 
 class ComponentMesh : public Component {
 public:
 
-	ComponentMesh(std::string name, GameObject* owner);
+	ComponentMesh(GameObject* owner);
 	~ComponentMesh();
 
 	void OnGui() override {
@@ -14,6 +15,6 @@ public:
 
 private:
 
-
+	Mesh* mesh;
 };
 

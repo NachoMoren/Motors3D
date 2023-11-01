@@ -10,9 +10,16 @@ public:
 	GameObject();
 	~GameObject();
 
+	void NewChild();
+
+	void NewComponent(ComponentType type);
+
+	void ChangeName(std::string name);
+
 public:
 
 	std::vector<Component*> mComponents;
 	std::vector<GameObject*> mChildren;
 
+	std::string _name;
 };
