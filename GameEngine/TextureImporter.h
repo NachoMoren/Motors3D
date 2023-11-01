@@ -11,13 +11,10 @@
 #pragma comment(lib, "Devil/libx86/ILU.lib")
 #pragma comment(lib, "Devil/libx86/ILUT.lib")
 
-struct Texture {
-	GLuint texID; 
-	const char* path; 
-};
-
 class TextureImporter {
 public:
 	GLuint ImportTexture(const char* filePath);
 	void InitDevil(); 
+
+	GLuint textureID, width, heigth; 
 };

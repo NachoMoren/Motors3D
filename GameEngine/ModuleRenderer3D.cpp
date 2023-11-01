@@ -125,9 +125,7 @@ bool ModuleRenderer3D::Init()
 
 	glLineWidth(2.0f);
 
-	mRenderer = new MeshRenderer();
-	mRenderer->LoadMesh("../Assets/BakerHouse.fbx");
-	mRenderer->FillBuffers();
+	App->meshRenderer->LoadMesh("../Assets/BakerHouse.fbx");
 
 
 	//Temp: Crea
@@ -164,7 +162,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
 	Grid.Render();
 
 	glBindTexture(GL_TEXTURE_2D, checkerTexture);
@@ -175,7 +172,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		DragAndDrop(App->input->dropped_filedir);
 		App->input->dropped = false; 
 	}
-	mRenderer->DrawMeshes();
+	App->meshRenderer->DrawMeshes();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	if (!App->editor->DrawEditor()) { return UPDATE_STOP; }
 
@@ -283,8 +280,7 @@ void ModuleRenderer3D::DragAndDrop(std::string path)
 
 	if (extension == "fbx" || extension == "FBX") {
 
-		mRenderer->LoadMesh(App->input->dropped_filedir);
-		mRenderer->FillBuffers();
+		App->meshRenderer->LoadMesh(App->input->dropped_filedir);
 		return;
 	}
 	else if (extension == "png" || extension == "PNG") {

@@ -8,10 +8,10 @@ GLuint TextureImporter::ImportTexture(const char* filePath)
 	ilBindImage(TextureID); 
 	ilLoadImage(filePath); 
 	GLuint ID = ilutGLBindTexImage(); 
-	glBindTexture(GL_TEXTURE_2D, ID);
+
 	ilDeleteImages(1, &TextureID);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+
 
 	if (TextureID != NULL) {
 		LOG("Texture %s loaded successfully", filePath);

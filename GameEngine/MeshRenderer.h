@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Module.h"
 #include "Globals.h"
 #include <vector>
 
@@ -25,18 +25,26 @@ struct Mesh
 	uint numVertex = 0;
 	float* vertex = nullptr;
 
-	uint textureID;
+	uint textureID, texHeigth, texWidth;
 
-
-	uint VBO, EBO;
 };
 
-class MeshRenderer {
+class MeshRenderer : public Module 
+{
 public:
+
+	MeshRenderer(Application* app, bool start_enabled = true);
+	~MeshRenderer();
+
+	bool Start();
+
+	bool CleanUp();
 
 	void LoadMesh(const char* filePath);
 
-	void FillBuffers();
+	void FillBuffers(Mesh* mesh);
+
+	void DrawMesh(Mesh* mesh);
 
 	void DrawMeshes();
 

@@ -44,9 +44,6 @@ public:
 	//You won't need this after using Frustum
 	mat4x4 ProjectionMatrix;
 
-	//tes tvar
-	MeshRenderer* mRenderer;
-
 	TextureImporter* tImporter; 
 
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
