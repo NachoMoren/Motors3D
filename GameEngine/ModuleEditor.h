@@ -35,6 +35,8 @@ public:
 	int GetAvailable();
 	
 	bool isWireframe;
+	bool showConsole; 
+	bool showConfig; 
 
 private:
 	SDL_version version; 

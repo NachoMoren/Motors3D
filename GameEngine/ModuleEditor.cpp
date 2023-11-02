@@ -51,6 +51,8 @@ bool ModuleEditor::Init()
     ImGui_ImplOpenGL3_Init();
 
     isWireframe = false; 
+    showConfig = true; 
+    showConsole = true; 
 
 	return true;
 }
@@ -80,7 +82,7 @@ bool ModuleEditor::DrawEditor()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-    if (ImGui::Begin("DockSpace Demo", nullptr, io.ConfigFlags)) {
+    if (ImGui::Begin("DockSpace Demo", nullptr, windowFlags)) {
         ImGui::PopStyleVar(3);
 
         ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
@@ -106,6 +108,17 @@ bool ModuleEditor::DrawEditor()
         {
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("Window"))
+        {
+            if (ImGui::MenuItem("Config")) { 
+                showConfig = !showConfig; 
+            }
+            if (ImGui::MenuItem("Console")) {
+                showConsole = !showConsole;
+            }
+
+            ImGui::EndMenu();
+        }
         if (ImGui::BeginMenu("Select"))
         {
             ImGui::EndMenu();
@@ -123,10 +136,12 @@ bool ModuleEditor::DrawEditor()
     }
     
     // Console Window
-    ConsoleWindow(); 
+    if(showConsole)
+        ConsoleWindow(); 
 
     //Config
-    Configuration();
+    if(showConfig)
+        Configuration();
     
     // Rendering
     ImGui::Render();
