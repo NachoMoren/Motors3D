@@ -45,6 +45,11 @@ private:
 	std::string systemData; 
 	int mFPSLogSize = 50;
 
+	const char* cubePath;
+	const char* spherePath;
+	const char* conePath;
+	const char* cylinderPath;
+
 
 };
 
