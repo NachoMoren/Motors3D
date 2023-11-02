@@ -15,12 +15,26 @@ Scaffold is a 3D game engine that's being developed as didactic purpose for the 
 
 ## Camera:
 
+* W: Move Forwards
+* S: Move Backwards
+* D: Move right
+* A: Move left
+* R: Move Up
+* T: Move Down
 
+* Mouse Wheel: zoom in/out
+* Middle Click: Drag around
+* Left Shift: Move faster
+* F: Look at selected object (for now is 0,0)
+* Right Click: Orbit around selected object
 
 ## Drag And Drop:
 
+* In order to load new 3D models or change the texture of the model, drag the .fbx/.png files on the screen.
 
+## Other:
 
+* Left Click: Move windows
 
 ## License
 
