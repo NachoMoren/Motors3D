@@ -32,7 +32,7 @@ public:
 
 	void OnResize(int width, int height);
 	void CheckerTexture(); 
-	void DrawCheckersCube();
+	void DrawCube();
 	void DragAndDrop(std::string path);
 
 public:
@@ -54,5 +54,5 @@ public:
 	uint colorBuffer; 
 	uint renderBuffer; 
 
-	bool drawCheckersCube; 
+	bool drawCube; 
 };

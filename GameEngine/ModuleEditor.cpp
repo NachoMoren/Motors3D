@@ -2,6 +2,8 @@
 #include "ModuleEditor.h"
 
 #include "ModuleWindow.h"
+#include "Globals.h"
+
 
 #include "ImGui/imgui.h"
 #include "ImGui//backends/imgui_impl_sdl2.h"
@@ -59,7 +61,7 @@ bool ModuleEditor::DrawEditor()
     ImGui::NewFrame();
 
     // Demo Menu
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
 
     // MainMenuBar
     if (ImGui::BeginMainMenuBar())
@@ -92,11 +94,8 @@ bool ModuleEditor::DrawEditor()
 
     // Console Window
     if (ImGui::Begin("Console")) {
-        AddLog();
-        for (int i = 0; i < mConsoleLog.size(); i++) {
-            ImGui::Text(mConsoleLog[i]);
-
-        }
+        AddLog(getLog());
+       
         ImGui::End();
     }
     else {
@@ -135,14 +134,9 @@ void ModuleEditor::AddFPS(const float aFPS)
 
 }
 
-void ModuleEditor::AddLog()
+void ModuleEditor::AddLog(const std::string& str)
 {
-    if (mConsoleLog.size() >= 100) {
-        mConsoleLog.erase(mConsoleLog.begin());
-
-    }
-    mConsoleLog = GET_LOG();
-    //mConsoleLog.push_back(tmp_string);
+    ImGui::Text(str.data());
 }
 
 void ModuleEditor::Configuration()
@@ -199,7 +193,7 @@ void ModuleEditor::Configuration()
         }
         if (ImGui::CollapsingHeader("Renderer")) {
             ImGui::NewLine();
-            ImGui::Checkbox("Cube Checkers", &App->renderer3D->drawCheckersCube);
+            ImGui::Checkbox("Cube", &App->renderer3D->drawCube);
             ImGui::NewLine();
         }
         if (ImGui::CollapsingHeader("Camera")) {

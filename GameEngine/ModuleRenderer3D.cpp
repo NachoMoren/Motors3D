@@ -133,9 +133,9 @@ bool ModuleRenderer3D::Init()
 
 	tImporter = new TextureImporter();
 	tImporter->InitDevil();
-	checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
+	//checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
 
-	drawCheckersCube = false; 
+	drawCube = false; 
 	
 
 	return ret;
@@ -165,15 +165,15 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	Grid.Render();
 
 	glBindTexture(GL_TEXTURE_2D, checkerTexture);
-	if (drawCheckersCube) {
-		DrawCheckersCube();
+	if (drawCube) {
+		DrawCube();
 	}
 	if (App->input->dropped) {
 		DragAndDrop(App->input->dropped_filedir);
 		App->input->dropped = false; 
 	}
 	App->meshRenderer->DrawMeshes();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	
 	if (!App->editor->DrawEditor()) { return UPDATE_STOP; }
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -236,7 +236,7 @@ void ModuleRenderer3D::CheckerTexture()
 	glDisable(GL_TEXTURE_2D);
 }
 
-void ModuleRenderer3D::DrawCheckersCube()
+void ModuleRenderer3D::DrawCube()
 {
 	glBegin(GL_QUADS);
 
@@ -270,6 +270,7 @@ void ModuleRenderer3D::DrawCheckersCube()
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
+
 	glEnd();
 
 }

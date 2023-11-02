@@ -5,6 +5,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include <vector>
+#include <string>
 
 class ModuleEditor : public Module
 {
@@ -19,7 +20,7 @@ public:
 	bool CleanUp() override;
 
 	void AddFPS(const float aFPS);
-	void AddLog();
+	void AddLog(const std::string& str);
 
 	void Configuration();
 
@@ -39,7 +40,6 @@ private:
 	std::string systemData; 
 	int mFPSLogSize = 50;
 
-	std::vector<const char*> mConsoleLog;
 
 };
 

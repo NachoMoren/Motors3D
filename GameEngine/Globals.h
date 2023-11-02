@@ -7,15 +7,13 @@
 #include <windows.h>
 #include <stdio.h>
 #include <vector>
+#include <string>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 void log(const char file[], int line, const char* format, ...);
 
 #define GET_LOG() getLog();
-std::vector<const char*> getLog();
-
-#define GET_LAST_LOG() getLastLog();
-const char* getLastLog();
+std::string getLog();
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
