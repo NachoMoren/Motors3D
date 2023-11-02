@@ -3,6 +3,7 @@
 
 #include "ModuleWindow.h"
 #include "Globals.h"
+#include "Assimp/include/version.h"
 
 
 #include "ImGui/imgui.h"
@@ -53,6 +54,9 @@ bool ModuleEditor::Init()
     isWireframe = false; 
     showConfig = true; 
     showConsole = true; 
+    showAbout = false; 
+
+    SDL_GetVersion(&version);
 
 	return true;
 }
@@ -125,7 +129,10 @@ bool ModuleEditor::DrawEditor()
         }
         if (ImGui::BeginMenu("Help"))
         {
-            if (ImGui::MenuItem("About")) { ImGui::Text("We lit"); }
+            if(ImGui::MenuItem("Documentation"))
+                ShellExecute(0, 0, "https://github.com/NachoMoren/Scaffold", 0, 0, SW_SHOW);
+            if (ImGui::MenuItem("About"))
+                showAbout = !showAbout; 
             ImGui::EndMenu();
         }
 
@@ -142,6 +149,9 @@ bool ModuleEditor::DrawEditor()
     //Config
     if(showConfig)
         Configuration();
+
+    if (showAbout)
+        About(); 
     
     // Rendering
     ImGui::Render();
@@ -181,6 +191,54 @@ void ModuleEditor::ConsoleWindow()
 {
     if (ImGui::Begin("Console")) {
         AddLog(getLog());
+
+        ImGui::End();
+    }
+    else {
+        ImGui::End();
+    }
+}
+
+void ModuleEditor::About() {
+    if (ImGui::Begin("About")) {
+        std::string ver; 
+        ImGui::Text("Scaffold Engine");
+        ImGui::Separator();
+        ImGui::TextDisabled("By Nacho Moreno and Biel Rubio\n");
+        ImGui::Text("A new engine made by two CITM students, for educational purpose.");
+        ImGui::Text("\n3rd Party libraries: \n");
+        ImGui::Separator();
+        ImGui::Text(" - SDL v%d.%d.%d", version.major, version.minor, version.patch);
+
+        ver = " - ImGui v"  + std::string(ImGui::GetVersion());
+        ImGui::Text(ver.c_str());
+
+        ver = " - Assimp v" + std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
+        ImGui::Text(ver.c_str());
+
+        ver = " - DevIL v1.8.0"; // No real time version available
+        ImGui::Text(ver.c_str());
+
+        ver = " - OpenGL v";
+        ver += (const char*)glGetString(GL_VERSION);
+        ImGui::Text(ver.c_str());
+
+        ver = " - Glew v";
+        ver += (const char*)glewGetString(GLEW_VERSION);
+        ImGui::Text(ver.c_str());
+        
+        ImGui::Text(" - Parson v1.5.3"); //No real time version available
+
+        ImGui::Text(" - MathGeoLib v1.5"); //No real time available
+
+        
+        ImGui::Text("\nLicense: ");
+        ImGui::Separator();
+        ImGui::Text("\nMIT License");
+        ImGui::Text("\nCopyright (c) 2023 NachoMoren");
+        ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy \nof this software and associated documentation files (the 'Software'), to deal \nin the Software without restriction, including without limitation the rights \nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell \ncopies of the Software, and to permit persons to whom the Software is \nfurnished to do so, subject to the following conditions:");
+        ImGui::Text("\nThe above copyright notice and this permission notice shall be included in all \ncopies or substantial portions of the Software.");
+        ImGui::Text("\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR \nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE \nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER \nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, \nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE \nSOFTWARE.");
 
         ImGui::End();
     }
@@ -413,4 +471,6 @@ int ModuleEditor::GetReserved() {
     glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTED_MEMORY_NVX, &reserved);
     return reserved / 1024.0f;
 }
+
+
 

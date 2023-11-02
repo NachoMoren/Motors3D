@@ -32,12 +32,13 @@ public:
 	int GetUsage();
 	int GetBudget();
 	int GetReserved();
+	void About();
 	int GetAvailable();
 	
 	bool isWireframe;
 	bool showConsole; 
 	bool showConfig; 
-
+	bool showAbout; 
 private:
 	SDL_version version; 
 	std::vector<float> mFPSLog;
