@@ -50,8 +50,24 @@ update_status ModuleCamera3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
+	//Move with middle button
+	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
+	{
+		int dx = -App->input->GetMouseXMotion();
+		int dy = App->input->GetMouseYMotion();
+
+		float moveSpeed = 1.0f * dt;
+
+		//Movement vector
+		float3 moveVector = X * (dx * moveSpeed) + Y * (dy * moveSpeed);
+
+		// Update
+		Position += moveVector;
+		Reference += moveVector;
+	}
+
 	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if(App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT) newPos.y -= speed;
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
@@ -59,6 +75,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
 
 	if (App->input->GetMouseZ() < 0)
 		newPos += Z * speed * 10;
@@ -68,6 +85,11 @@ update_status ModuleCamera3D::Update(float dt)
 	Position += newPos;
 	Reference += newPos;
 
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		// Reset to 0, till we have game objects
+		Position = float3(0.0f, 0.0f, 0.0f);
+	}
 	// Mouse motion ----------------
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
