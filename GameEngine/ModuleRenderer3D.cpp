@@ -133,8 +133,7 @@ bool ModuleRenderer3D::Init()
 
 	tImporter = new TextureImporter();
 	tImporter->InitDevil();
-	//checkerTexture = tImporter->ImportTexture("../Assets/Baker_house.png");
-
+	textureID = tImporter->ImportTexture("../Assets/Baker_house.png");
 	drawCube = false; 
 	
 
@@ -168,7 +167,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
 	if (drawCube) {
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, checkerTexture);
 		DrawCube();
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_TEXTURE_2D);
 	}
 	if (App->input->dropped) {
 		DragAndDrop(App->input->dropped_filedir);

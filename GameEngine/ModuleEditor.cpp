@@ -56,6 +56,11 @@ bool ModuleEditor::Init()
     showConsole = true; 
     showAbout = false; 
 
+    cubePath = "../Assets/Basic_Shapes/Cube.fbx";
+    conePath = "../Assets/Basic_Shapes/Cone.fbx";
+    spherePath = "../Assets/Basic_Shapes/Sphere.fbx";
+    cylinderPath = "../Assets/Basic_Shapes/Cylinder.fbx";
+
     SDL_GetVersion(&version);
 
 	return true;
@@ -300,10 +305,18 @@ void ModuleEditor::Configuration()
             ImGui::NewLine();
         }
         if (ImGui::CollapsingHeader("Renderer")) {
-            ImGui::NewLine();
-            ImGui::Checkbox("Cube", &App->renderer3D->drawCube);
+            ImGui::Checkbox("Cube Checkers", &App->renderer3D->drawCube);
             ImGui::Checkbox("Wireframe", &isWireframe);
-            ImGui::NewLine();
+            if (ImGui::CollapsingHeader("Basic Shapes")) {
+                if (ImGui::Button("Cube"))
+                    App->meshRenderer->LoadMesh(cubePath);
+                if (ImGui::Button("Sphere"))
+                    App->meshRenderer->LoadMesh(spherePath);
+                if (ImGui::Button("Cone"))
+                    App->meshRenderer->LoadMesh(conePath);
+                if (ImGui::Button("Cylinder"))
+                    App->meshRenderer->LoadMesh(cylinderPath);
+            }
         }
         if (ImGui::CollapsingHeader("Camera")) {
 
