@@ -21,6 +21,7 @@ public:
 
 	void AddFPS(const float aFPS);
 	void AddLog(const std::string& str);
+	void ConsoleWindow(); 
 
 	void Configuration();
 

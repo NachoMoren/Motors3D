@@ -27,6 +27,8 @@ bool ModuleEditor::Init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    io.ConfigDockingWithShift = false; //Can move UI without pressing shift
+
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
     
     //io.ConfigViewportsNoAutoMerge = true;
@@ -61,7 +63,33 @@ bool ModuleEditor::DrawEditor()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+    //Docking Stuff
+    ImGuiIO& io = ImGui::GetIO();
+    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+        ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_MenuBar;
 
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+    ImGui::SetNextWindowBgAlpha(0.0f);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+    if (ImGui::Begin("DockSpace Demo", nullptr, io.ConfigFlags)) {
+        ImGui::PopStyleVar(3);
+
+        ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+        ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+        ImGui::End();
+    }
+    
+    
     // Demo Menu
     //ImGui::ShowDemoWindow();
 
@@ -93,16 +121,9 @@ bool ModuleEditor::DrawEditor()
     else {
         ImGui::End();
     }
-
+    
     // Console Window
-    if (ImGui::Begin("Console")) {
-        AddLog(getLog());
-       
-        ImGui::End();
-    }
-    else {
-        ImGui::End();
-    }
+    ConsoleWindow(); 
 
     //Config
     Configuration();
@@ -139,6 +160,18 @@ void ModuleEditor::AddFPS(const float aFPS)
 void ModuleEditor::AddLog(const std::string& str)
 {
     ImGui::Text(str.data());
+}
+
+void ModuleEditor::ConsoleWindow()
+{
+    if (ImGui::Begin("Console")) {
+        AddLog(getLog());
+
+        ImGui::End();
+    }
+    else {
+        ImGui::End();
+    }
 }
 
 void ModuleEditor::Configuration()
