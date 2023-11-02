@@ -33,6 +33,7 @@ public:
 	int GetReserved();
 	int GetAvailable();
 	
+	bool isWireframe;
 
 private:
 	SDL_version version; 

@@ -163,8 +163,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
-
-	glBindTexture(GL_TEXTURE_2D, checkerTexture);
+	if (App->editor->isWireframe) {
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
+	}
 	if (drawCube) {
 		DrawCube();
 	}

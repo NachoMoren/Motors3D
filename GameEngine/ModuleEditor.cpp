@@ -48,6 +48,8 @@ bool ModuleEditor::Init()
     ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
     ImGui_ImplOpenGL3_Init();
 
+    isWireframe = false; 
+
 	return true;
 }
 
@@ -194,6 +196,7 @@ void ModuleEditor::Configuration()
         if (ImGui::CollapsingHeader("Renderer")) {
             ImGui::NewLine();
             ImGui::Checkbox("Cube", &App->renderer3D->drawCube);
+            ImGui::Checkbox("Wireframe", &isWireframe);
             ImGui::NewLine();
         }
         if (ImGui::CollapsingHeader("Camera")) {
@@ -356,7 +359,6 @@ int ModuleEditor::GetBudget() {
     glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &budget);
     return budget / 1024.0f;
 }
-
 
 int ModuleEditor::GetReserved() {
     int reserved;
