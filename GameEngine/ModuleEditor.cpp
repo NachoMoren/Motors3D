@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "Globals.h"
 #include "Assimp/include/version.h"
+#include "GameObject.h"
 
 
 #include "ImGui/imgui.h"
@@ -55,6 +56,7 @@ bool ModuleEditor::Init()
     showConfig = true; 
     showConsole = true; 
     showAbout = false; 
+    showHierarchy = false; 
 
     cubePath = "../Assets/Basic_Shapes/Cube.fbx";
     conePath = "../Assets/Basic_Shapes/Cone.fbx";
@@ -125,6 +127,9 @@ bool ModuleEditor::DrawEditor()
             if (ImGui::MenuItem("Console")) {
                 showConsole = !showConsole;
             }
+            if (ImGui::MenuItem("Hierarchy")) {
+                showHierarchy = !showHierarchy;
+            }
 
             ImGui::EndMenu();
         }
@@ -157,6 +162,9 @@ bool ModuleEditor::DrawEditor()
 
     if (showAbout)
         About(); 
+
+    if (showHierarchy)
+        Hierarchy();
     
     // Rendering
     ImGui::Render();
@@ -245,6 +253,14 @@ void ModuleEditor::About() {
         ImGui::Text("\nThe above copyright notice and this permission notice shall be included in all \ncopies or substantial portions of the Software.");
         ImGui::Text("\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR \nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE \nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER \nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, \nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE \nSOFTWARE.");
 
+        ImGui::End();
+    }
+    else {
+        ImGui::End();
+    }
+}
+void ModuleEditor::Hierarchy() {
+    if (ImGui::Begin("Hierarchy")) {
         ImGui::End();
     }
     else {

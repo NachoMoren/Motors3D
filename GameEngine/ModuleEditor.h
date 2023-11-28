@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 
+class GameObject; 
 class ModuleEditor : public Module
 {
 public:
@@ -33,12 +34,14 @@ public:
 	int GetBudget();
 	int GetReserved();
 	void About();
+	void Hierarchy();
 	int GetAvailable();
 	
 	bool isWireframe;
 	bool showConsole; 
 	bool showConfig; 
 	bool showAbout; 
+	bool showHierarchy; 
 private:
 	SDL_version version; 
 	std::vector<float> mFPSLog;

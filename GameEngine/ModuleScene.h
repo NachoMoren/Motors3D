@@ -20,9 +20,14 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void DrawTree(GameObject* go);
+
 public:
 
 	GameObject* sceneObject;
+	GameObject* selectedObject; 
+	GameObject* draggedObject; 
+	GameObject* hoveredObject; 
 };
 
 #endif // __ModuleScene_H__
