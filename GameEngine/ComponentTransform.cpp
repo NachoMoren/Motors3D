@@ -17,3 +17,18 @@ void ComponentTransform::OnInspector()
 		ImGui::InputFloat3("Scale", scale.ptr());
 	}
 }
+
+float3 ComponentTransform::GetX()
+{
+	return globalTransform.RotatePart().Col(0).Normalized();
+}
+
+float3 ComponentTransform::GetY()
+{
+	return globalTransform.RotatePart().Col(1).Normalized();
+}
+
+float3 ComponentTransform::GetZ()
+{
+	return globalTransform.RotatePart().Col(2).Normalized();
+}

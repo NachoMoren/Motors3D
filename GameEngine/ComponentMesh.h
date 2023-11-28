@@ -11,7 +11,7 @@ public:
 
 	void OnInspector() override;
 
-private:
+public:
 
 	Mesh* mesh;
 };

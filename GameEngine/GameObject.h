@@ -2,10 +2,9 @@
 #include "Globals.h"
 #include "Component.h"
 
-#include "ComponentTransform.h"
-#include "ComponentMesh.h"
-
 #include <vector>
+
+class ComponentTransform;
 
 class GameObject {
 public:
@@ -26,8 +25,11 @@ public:
 
 public:
 
+	GameObject* parent;
 	std::vector<Component*> mComponents;
 	std::vector<GameObject*> mChildren;
 
 	std::string _name;
+
+	ComponentTransform* transform;
 };
