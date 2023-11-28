@@ -261,6 +261,7 @@ void ModuleEditor::About() {
 }
 void ModuleEditor::Hierarchy() {
     if (ImGui::Begin("Hierarchy")) {
+        App->scene->DrawTree(App->scene->sceneObject);
         ImGui::End();
     }
     else {

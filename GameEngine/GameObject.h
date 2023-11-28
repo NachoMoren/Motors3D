@@ -13,7 +13,7 @@ public:
 	GameObject();
 	~GameObject();
 
-	void NewChild();
+	void NewChild(GameObject* go);
 
 	void NewComponent(ComponentType type);
 

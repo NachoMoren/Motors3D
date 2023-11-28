@@ -8,10 +8,9 @@ GameObject::~GameObject()
 {
 }
 
-void GameObject::NewChild()
+void GameObject::NewChild(GameObject* go)
 {
-	GameObject* gameObject = new GameObject();
-	mChildren.push_back(gameObject);
+	mChildren.push_back(go);
 }
 
 void GameObject::NewComponent(ComponentType type)

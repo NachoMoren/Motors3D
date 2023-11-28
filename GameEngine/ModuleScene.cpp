@@ -19,6 +19,10 @@ bool ModuleScene::Init()
     sceneObject = new GameObject(); 
     sceneObject->ChangeName("Scene");
 
+    GameObject* dummy = new GameObject();
+    dummy->ChangeName("Dummy");
+
+    sceneObject->NewChild(dummy);
 
 	return true;
 }

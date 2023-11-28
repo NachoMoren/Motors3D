@@ -9,6 +9,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "MeshRenderer.h"
+#include "ModuleScene.h"
 
 #include<vector>
 
@@ -19,6 +20,7 @@ public:
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
+	ModuleScene* scene; 
 	ModuleEditor* editor;
 	MeshRenderer* meshRenderer; 
 
