@@ -27,10 +27,10 @@ void GameObject::NewComponent(ComponentType type)
 	case ComponentType::UNKNOWN:
 		break;
 	case ComponentType::TRANSFORM:
-		component = new ComponentTransform(this);
+		//component = new ComponentTransform(this);
 		break;
 	case ComponentType::MESH:
-		component = new ComponentMesh(this);
+		//component = new ComponentMesh(this);
 		break;
 	case ComponentType::MATERIAL:
 		break;

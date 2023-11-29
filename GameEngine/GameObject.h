@@ -32,8 +32,6 @@ public:
 
 public:
 	GameObject* mParent; 
-
-	GameObject* parent;
 	std::vector<Component*> mComponents;
 	std::vector<GameObject*> mChildren;
 
