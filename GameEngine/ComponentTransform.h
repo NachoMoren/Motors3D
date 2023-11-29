@@ -12,9 +12,17 @@ public:
 
 	void OnInspector() override;
 
-private:
+	//Get right side
+	float3 GetX();
+	//Get up
+	float3 GetY();
+	//Get forward
+	float3 GetZ();
 
-	float4x4 matrix;
+public:
+
+	float4x4 globalTransform;
+	float4x4 localTransform;
 
 	float3 position;
 	float3 rotation;
