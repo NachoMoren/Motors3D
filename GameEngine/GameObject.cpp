@@ -4,6 +4,10 @@ GameObject::GameObject()
 {
 }
 
+GameObject::GameObject(std::string name) : _name(name)
+{
+}
+
 GameObject::~GameObject()
 {
 }
@@ -11,6 +15,7 @@ GameObject::~GameObject()
 void GameObject::NewChild(GameObject* go)
 {
 	mChildren.push_back(go);
+	go->SetParent(this);
 }
 
 void GameObject::NewComponent(ComponentType type)
@@ -39,6 +44,28 @@ void GameObject::NewComponent(ComponentType type)
 		mComponents.push_back(component);
 	else
 		LOG("Can't create duplicate Component");
+}
+
+void GameObject::SetParent(GameObject* parent)
+{
+	this->mParent = parent; 
+}
+
+void GameObject::Reparent(GameObject* newParent) {
+	if (newParent != nullptr) {
+		mParent->RemoveChild(this);
+		mParent = newParent; 
+		newParent->NewChild(this);
+	}
+}
+
+void GameObject::RemoveChild(GameObject* child)
+{
+	for (uint i = 0; i < mChildren.size(); i++) {
+		if (mChildren[i] == child) {
+			mChildren.erase(mChildren.begin() + i);
+		}
+	}
 }
 
 void GameObject::ChangeName(std::string name)

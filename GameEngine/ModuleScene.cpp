@@ -22,7 +22,12 @@ bool ModuleScene::Init()
     GameObject* dummy = new GameObject();
     dummy->ChangeName("Dummy");
 
+    GameObject* dummy2 = new GameObject();
+    dummy2->ChangeName("Dummy2");
+
     sceneObject->NewChild(dummy);
+
+    sceneObject->NewChild(dummy2);
 
 	return true;
 }
@@ -55,6 +60,20 @@ void ModuleScene::DrawTree(GameObject* go) {
     if (go->mChildren.size() == 0) {
         flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
     }
+    if (go->mParent == nullptr)
+    {
+        flags |= ImGuiTreeNodeFlags_DefaultOpen;
+    }
+    else
+    {
+        flags |= ImGuiTreeNodeFlags_OpenOnArrow;
+    }
+
+    //Mark which object the user picked
+    if (go == selectedObject)
+    {
+        flags |= ImGuiTreeNodeFlags_Selected;
+    }
 
     bool isNodeOpen = ImGui::TreeNodeEx(go, flags, go->_name.c_str());
 
@@ -62,11 +81,11 @@ void ModuleScene::DrawTree(GameObject* go) {
     if (ImGui::BeginDragDropSource()) {
         ImGui::SetDragDropPayload("Game Object", go, sizeof(GameObject*));
         draggedObject = go; 
-        ImGui::Text("Drag");
+        ImGui::Text("Reparent");
         ImGui::EndDragDropSource();
     }
 
-    if (ImGui::IsItemHovered()) {
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)) {
         hoveredObject = go; 
         if(ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left)) {
             selectedObject = go;
@@ -75,8 +94,8 @@ void ModuleScene::DrawTree(GameObject* go) {
 
     //
     if (ImGui::BeginDragDropTarget()) {
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject")) {
-            //draggedObject->SetParent(hoveredObject); 
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Game Object")) {
+            draggedObject->Reparent(hoveredObject);
         }
         ImGui::EndDragDropTarget(); 
     }

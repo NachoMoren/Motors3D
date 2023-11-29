@@ -11,11 +11,18 @@ class GameObject {
 public:
 
 	GameObject();
+	GameObject(std::string name);
 	~GameObject();
 
 	void NewChild(GameObject* go);
 
 	void NewComponent(ComponentType type);
+
+	void SetParent(GameObject* parent);
+
+	void Reparent(GameObject* newParent);
+
+	void RemoveChild(GameObject* child);
 
 	void ChangeName(std::string name);
 
@@ -25,7 +32,7 @@ public:
 	void Inspector();
 
 public:
-
+	GameObject* mParent; 
 	std::vector<Component*> mComponents;
 	std::vector<GameObject*> mChildren;
 
