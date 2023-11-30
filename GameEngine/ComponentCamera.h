@@ -12,6 +12,11 @@ public:
 
 	void OnInspector() override;
 
+
+	void Update(float dt) override;
+
+	void LookAt(float3 pos);
+
 public:
 
 	Frustum frustum;

@@ -10,6 +10,7 @@
 #include "ModuleEditor.h"
 #include "MeshRenderer.h"
 #include "ModuleScene.h"
+#include "ModuleResources.h"
 
 #include<vector>
 
@@ -23,6 +24,7 @@ public:
 	ModuleScene* scene; 
 	ModuleEditor* editor;
 	MeshRenderer* meshRenderer; 
+	ModuleResources* resources;
 
 private:
 

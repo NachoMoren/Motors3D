@@ -35,7 +35,7 @@ public:
 	void Enable() { active = true; };
 	void Disable() { active = false; };
 
-	virtual void Update() {};
+	virtual void Update(float dt) {};
 
 	virtual void OnInspector() {};
 

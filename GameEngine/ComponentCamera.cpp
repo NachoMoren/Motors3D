@@ -27,6 +27,11 @@ void ComponentCamera::OnInspector()
 
 }
 
+void ComponentCamera::Update(float dt) {
+
+
+}
+
 void ComponentCamera::LookAt(float3 pos) {
 
 	frustum.front = (pos - frustum.pos).Normalized();

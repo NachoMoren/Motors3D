@@ -9,6 +9,7 @@ Application::Application()
 	editor = new ModuleEditor(this);
 	meshRenderer = new MeshRenderer(this);
 	scene = new ModuleScene(this);
+	resources = new ModuleResources(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -19,6 +20,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(meshRenderer);
+	AddModule(resources);
 	
 
 	// Renderer last!
