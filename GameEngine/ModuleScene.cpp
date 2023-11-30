@@ -106,7 +106,7 @@ void ModuleScene::DrawTree(GameObject* go) {
 
     if (ImGui::BeginPopupContextItem()) {
         if (ImGui::Button("Add empty child")) {
-            go->NewChild(new GameObject());
+            go->NewChild(new GameObject("Child"));
             ImGui::CloseCurrentPopup();
         } 
         else if (ImGui::Button("Delete")) {
