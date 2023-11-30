@@ -15,12 +15,12 @@ bool ModuleResources::Init()
 
 update_status ModuleResources::PreUpdate(float dt)
 {
-	return update_status();
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleResources::PostUpdate(float dt)
 {
-	return update_status();
+	return UPDATE_CONTINUE;
 }
 
 bool ModuleResources::CleanUp()
