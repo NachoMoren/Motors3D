@@ -20,7 +20,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(meshRenderer);
-	AddModule(resources);
+	//AddModule(resources);
 	
 
 	// Renderer last!

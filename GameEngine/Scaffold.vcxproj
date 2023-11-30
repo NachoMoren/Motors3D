@@ -167,6 +167,7 @@
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
@@ -230,6 +231,7 @@
     <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Primitive.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
