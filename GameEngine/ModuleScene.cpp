@@ -75,43 +75,48 @@ void ModuleScene::DrawTree(GameObject* go) {
         flags |= ImGuiTreeNodeFlags_Selected;
     }
 
-    if (ImGui::TreeNodeEx(go, flags, go->_name.c_str())) {
-        //Start drawing the ui
-        if (ImGui::BeginDragDropSource()) {
-            ImGui::SetDragDropPayload("Game Object", go, sizeof(GameObject*));
-            draggedObject = go;
-            ImGui::Text("Reparent");
-            ImGui::EndDragDropSource();
+    bool isNodeOpen = ImGui::TreeNodeEx(go, flags, go->_name.c_str());
+
+    if (go->mChildren.size() == 0) {
+        flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+        isNodeOpen = false;
+    }
+    //Start drawing the ui
+    if (ImGui::BeginDragDropSource()) {
+        ImGui::SetDragDropPayload("Game Object", go, sizeof(GameObject*));
+        draggedObject = go;
+        ImGui::Text("Reparent");
+        ImGui::EndDragDropSource();
+    }
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)) {
+        hoveredObject = go;
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left)) {
+            selectedObject = go;
         }
+    }
 
-        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)) {
-            hoveredObject = go;
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left)) {
-                selectedObject = go;
-            }
+    if (ImGui::BeginDragDropTarget()) {
+        ImGuiDragDropFlags dropFlags = ImGuiDragDropFlags_AcceptBeforeDelivery;
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Game Object")) {
+            draggedObject->Reparent(hoveredObject);
         }
+        ImGui::EndDragDropTarget();
+    }
 
-        if (ImGui::BeginDragDropTarget()) {
-            ImGuiDragDropFlags dropFlags = ImGuiDragDropFlags_AcceptBeforeDelivery;
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Game Object")) {
-
-                draggedObject->Reparent(hoveredObject);
-            }
-            ImGui::EndDragDropTarget();
+    if (ImGui::BeginPopupContextItem()) {
+        if (ImGui::Button("Add empty child")) {
+            go->NewChild(new GameObject());
+            ImGui::CloseCurrentPopup();
+        } 
+        else if (ImGui::Button("Delete")) {
+            //care with scene
+            go->mParent->RemoveChild(go);
         }
+        ImGui::EndPopup();
+    }
 
-        if (ImGui::BeginPopupContextItem()) {
-            if (ImGui::Button("Add empty child")) {
-                go->NewChild(new GameObject());
-                ImGui::CloseCurrentPopup();
-            } 
-            else if (ImGui::Button("Delete")) {
-                go->mParent->RemoveChild(go);
-            }
-            ImGui::EndPopup();
-        }
-
-
+    if (isNodeOpen) {
         if (!go->mChildren.empty()) {
             for (uint i = 0; i < go->mChildren.size(); i++) {
                 DrawTree(go->mChildren[i]);
@@ -119,7 +124,4 @@ void ModuleScene::DrawTree(GameObject* go) {
             ImGui::TreePop();
         }
     }
-
-    
-
 }

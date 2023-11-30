@@ -14,8 +14,8 @@ GameObject::~GameObject()
 
 void GameObject::NewChild(GameObject* go)
 {
-	mChildren.push_back(go);
 	go->SetParent(this);
+	mChildren.push_back(go);
 }
 
 void GameObject::NewComponent(ComponentType type)
