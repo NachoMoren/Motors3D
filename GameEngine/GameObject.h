@@ -1,6 +1,7 @@
 #pragma once
 #include "Globals.h"
 #include "Component.h"
+#include "ComponentTransform.h"
 #include "Application.h"
 #include "Module.h"
 

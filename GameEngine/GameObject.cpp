@@ -4,6 +4,8 @@ GameObject::GameObject()
 {
 	toDelete = false; 
 	mParent = nullptr;
+	transform = new ComponentTransform(this);
+	mComponents.push_back(transform);
 }
 
 GameObject::GameObject(std::string name) : _name(name)
@@ -78,16 +80,17 @@ void GameObject::ChangeName(std::string name)
 void GameObject::PrintInspector()
 {
 	char newName[255]; 
+	//Change name, available for all objects, including scene
+	strcpy(newName, _name.c_str());
+	ImGui::BulletText("Name: ");
+	ImGui::SameLine();
+	ImGui::InputText("##Name", newName, 255, ImGuiInputTextFlags_EnterReturnsTrue);
+
+	if (ImGui::IsKeyDown(ImGuiKey_Enter))
+		_name = newName;
 
 	if (mParent != nullptr) {
-		strcpy(newName, _name.c_str());
-		ImGui::BulletText("Name: ");
-		ImGui::SameLine();
-		ImGui::InputText("##Name", newName, 255, ImGuiInputTextFlags_EnterReturnsTrue);
-
-		if (ImGui::IsKeyDown(ImGuiKey_Enter))
-			_name = newName;
-
+		//Components on inspector
 		for (uint i = 0; i < mComponents.size(); i++) {
 			ImGui::Separator();
 			mComponents[i]->OnInspector();

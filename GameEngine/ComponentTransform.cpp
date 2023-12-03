@@ -2,6 +2,8 @@
 
 ComponentTransform::ComponentTransform(GameObject* owner) : Component(ComponentType::TRANSFORM, owner)
 {
+	globalTransform.SetIdentity();
+	localTransform.SetIdentity();
 }
 
 ComponentTransform::~ComponentTransform()
@@ -10,7 +12,7 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::OnInspector()
 {
-	if (ImGui::CollapsingHeader("Transform"))
+	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
 		ImGui::DragFloat3("Position", position.ptr(), 0.2f);
 		ImGui::DragFloat3("Rotation", rotation.ptr(), 0.2f);
