@@ -23,7 +23,11 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::OnInspector()
 {
+	if (ImGui::CollapsingHeader("Camera")) {
+		if (ImGui::SliderFloat) {
 
+		}
+	}
 
 }
 

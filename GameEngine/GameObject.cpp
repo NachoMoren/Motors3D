@@ -2,6 +2,7 @@
 
 GameObject::GameObject()
 {
+	toDelete = false; 
 }
 
 GameObject::GameObject(std::string name) : _name(name)
@@ -71,6 +72,32 @@ void GameObject::RemoveChild(GameObject* child)
 void GameObject::ChangeName(std::string name)
 {
 	_name = name;
+}
+
+void GameObject::PrintInspector()
+{
+	char newName[255]; 
+
+	if (mParent != nullptr) {
+		strcpy(newName, _name.c_str());
+		ImGui::BulletText("Name: ");
+		ImGui::SameLine();
+		ImGui::InputText("##Name", newName, 255, ImGuiInputTextFlags_EnterReturnsTrue);
+
+		if (ImGui::IsKeyDown(ImGuiKey_Enter))
+			_name = newName;
+
+		if (ImGui::Button("Delete")) {
+			toDelete = true; 
+		}
+
+
+		for (uint i = 0; i < mComponents.size(); i++) {
+			ImGui::Separator();
+			mComponents[i]->OnInspector();
+		}
+		ImGui::Separator();
+	}
 }
 
 bool GameObject::CheckComponent(ComponentType type)

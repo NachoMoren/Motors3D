@@ -42,6 +42,7 @@ public:
 	bool showConfig; 
 	bool showAbout; 
 	bool showHierarchy; 
+	bool showInspector; 
 private:
 	SDL_version version; 
 	std::vector<float> mFPSLog;

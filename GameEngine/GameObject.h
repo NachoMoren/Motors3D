@@ -1,6 +1,8 @@
 #pragma once
 #include "Globals.h"
 #include "Component.h"
+#include "Application.h"
+#include "Module.h"
 
 #include <vector>
 
@@ -25,6 +27,8 @@ public:
 
 	void ChangeName(std::string name);
 
+	void PrintInspector();
+
 	// Return true if there's a component of specified type in vector
 	bool CheckComponent(ComponentType type);
 
@@ -38,4 +42,6 @@ public:
 	std::string _name;
 
 	ComponentTransform* transform;
+
+	bool toDelete; 
 };

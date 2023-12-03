@@ -56,7 +56,7 @@ bool ModuleEditor::Init()
     showConfig = true; 
     showConsole = true; 
     showAbout = false; 
-    showHierarchy = false; 
+    showHierarchy = true; 
 
     cubePath = "../Assets/Basic_Shapes/Cube.fbx";
     conePath = "../Assets/Basic_Shapes/Cone.fbx";
@@ -130,6 +130,9 @@ bool ModuleEditor::DrawEditor()
             if (ImGui::MenuItem("Hierarchy")) {
                 showHierarchy = !showHierarchy;
             }
+            if (ImGui::MenuItem("Inspector")) {
+                showInspector = !showInspector;
+            }
 
             ImGui::EndMenu();
         }
@@ -165,6 +168,15 @@ bool ModuleEditor::DrawEditor()
 
     if (showHierarchy)
         Hierarchy();
+
+    if (showInspector) {
+        if (App->scene->selectedObject != nullptr) {
+            if (ImGui::Begin("Inspector")) {
+                App->scene->selectedObject->PrintInspector();
+            }
+            ImGui::End();
+        }
+    }
     
     // Rendering
     ImGui::Render();
