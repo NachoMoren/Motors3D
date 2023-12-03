@@ -3,6 +3,7 @@
 GameObject::GameObject()
 {
 	toDelete = false; 
+	mParent = nullptr;
 }
 
 GameObject::GameObject(std::string name) : _name(name)

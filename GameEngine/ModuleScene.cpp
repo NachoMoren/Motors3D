@@ -104,16 +104,18 @@ void ModuleScene::DrawTree(GameObject* go) {
         ImGui::EndDragDropTarget();
     }
 
+    //Maybe change it to game object?
     if (ImGui::BeginPopupContextItem()) {
         if (ImGui::Button("Add empty child")) {
             go->NewChild(new GameObject("Child"));
             ImGui::CloseCurrentPopup();
         } 
-        else if (ImGui::Button("Delete")) {
-            //care with scene
-            go->mParent->RemoveChild(go);
-        }
         ImGui::EndPopup();
+    }
+
+    if (go->toDelete && go->mParent!= nullptr) {
+        go->mParent->RemoveChild(go);
+        selectedObject = nullptr; 
     }
 
     if (isNodeOpen) {
