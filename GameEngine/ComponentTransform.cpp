@@ -4,6 +4,10 @@ ComponentTransform::ComponentTransform(GameObject* owner) : Component(ComponentT
 {
 	globalTransform.SetIdentity();
 	localTransform.SetIdentity();
+
+	position.Set(0.0f, 0.0f, 0.0f);
+	rotation.Set(0.0f, 0.0f, 0.0f);
+	scale.Set(0.0f, 0.0f, 0.0f);
 }
 
 ComponentTransform::~ComponentTransform()
