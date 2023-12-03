@@ -88,11 +88,6 @@ void GameObject::PrintInspector()
 		if (ImGui::IsKeyDown(ImGuiKey_Enter))
 			_name = newName;
 
-		if (ImGui::Button("Delete")) {
-			toDelete = true; 
-		}
-
-
 		for (uint i = 0; i < mComponents.size(); i++) {
 			ImGui::Separator();
 			mComponents[i]->OnInspector();

@@ -110,12 +110,15 @@ void ModuleScene::DrawTree(GameObject* go) {
             go->NewChild(new GameObject("Child"));
             ImGui::CloseCurrentPopup();
         } 
+        else if (ImGui::Button("Delete")) {
+            //care with scene
+            if (go->mParent != nullptr) {
+                go->mParent->RemoveChild(go);
+                selectedObject = nullptr; 
+            }
+            
+        }
         ImGui::EndPopup();
-    }
-
-    if (go->toDelete && go->mParent!= nullptr) {
-        go->mParent->RemoveChild(go);
-        selectedObject = nullptr; 
     }
 
     if (isNodeOpen) {
