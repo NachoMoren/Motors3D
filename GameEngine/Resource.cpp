@@ -1,5 +1,6 @@
 #include "Resource.h"
 
+
 Resource::Resource(UID uid, ResourceType type)
 {
 }
@@ -34,6 +35,11 @@ bool Resource::IsLoadedToMemory() const
 }
 
 bool Resource::LoadToMemory()
+{
+	return false;
+}
+
+bool Resource::UnloadFromMemory()
 {
 	return false;
 }

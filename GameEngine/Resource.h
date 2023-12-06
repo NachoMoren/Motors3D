@@ -25,7 +25,8 @@ public:
 	const char* GetAssetFile() const;
 	const char* GetLibraryFile() const;
 	bool IsLoadedToMemory() const;
-	bool LoadToMemory();
+	virtual bool LoadToMemory();
+	virtual bool UnloadFromMemory();
 	uint GetReferenceCount() const;
 	//virtual void Save(Config& config) const;
 	//virtual void Load(const Config& config);
