@@ -16,7 +16,7 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::OnInspector()
 {
-	if (ImGui::CollapsingHeader("Local Transformation"))
+	if (ImGui::CollapsingHeader("Local Transformation", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::DragFloat3("Position", position.ptr(), 0.2f);
 		ImGui::DragFloat3("Rotation", rotation.ptr(), 0.2f);
