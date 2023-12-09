@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
 #include "Application.h"
 #include "Module.h"
 
@@ -18,7 +19,7 @@ public:
 
 	void NewChild(GameObject* go);
 
-	void NewComponent(ComponentType type);
+	Component* NewComponent(ComponentType type);
 
 	void SetParent(GameObject* parent);
 
@@ -35,6 +36,8 @@ public:
 
 	void Inspector();
 
+	void RemoveComponent(Component* component);
+
 public:
 	GameObject* mParent; 
 	std::vector<Component*> mComponents;
@@ -42,7 +45,5 @@ public:
 
 	std::string _name;
 
-	ComponentTransform* transform;
-
-	bool toDelete; 
+	ComponentTransform* transform; 
 };

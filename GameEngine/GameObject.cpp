@@ -2,10 +2,10 @@
 
 GameObject::GameObject()
 {
-	toDelete = false; 
 	mParent = nullptr;
-	transform = new ComponentTransform(this);
-	mComponents.push_back(transform);
+	transform = (ComponentTransform*)NewComponent(ComponentType::TRANSFORM);
+	NewComponent(ComponentType::MESH);
+
 }
 
 GameObject::GameObject(std::string name) : _name(name)
@@ -22,7 +22,7 @@ void GameObject::NewChild(GameObject* go)
 	mChildren.push_back(go);
 }
 
-void GameObject::NewComponent(ComponentType type)
+Component* GameObject::NewComponent(ComponentType type)
 {
 	Component* component = nullptr;
 
@@ -31,10 +31,10 @@ void GameObject::NewComponent(ComponentType type)
 	case ComponentType::UNKNOWN:
 		break;
 	case ComponentType::TRANSFORM:
-		//component = new ComponentTransform(this);
+		component = new ComponentTransform(this);
 		break;
 	case ComponentType::MESH:
-		//component = new ComponentMesh(this);
+		component = new ComponentMesh(this);
 		break;
 	case ComponentType::MATERIAL:
 		break;
@@ -48,6 +48,8 @@ void GameObject::NewComponent(ComponentType type)
 		mComponents.push_back(component);
 	else
 		LOG("Can't create duplicate Component");
+
+	return component; 
 }
 
 void GameObject::SetParent(GameObject* parent)
@@ -117,4 +119,8 @@ void GameObject::Inspector()
 
 		mComponents.at(i)->OnInspector();
 	}
+}
+
+void GameObject::RemoveComponent(Component* component) {
+	mComponents.erase(std::find(mComponents.begin(), mComponents.end(), component));
 }
