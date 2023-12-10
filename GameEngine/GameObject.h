@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
+#include "ComponentCamera.h"
 #include "Application.h"
 #include "Module.h"
 

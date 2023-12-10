@@ -3,7 +3,7 @@
 #include "ComponentTransform.h"
 #include "GameObject.h"
 
-ComponentCamera::ComponentCamera(GameObject* owner) : Component(ComponentType::MESH, owner)
+ComponentCamera::ComponentCamera(GameObject* owner) : Component(ComponentType::CAMERA, owner)
 {
 	frustum.type = FrustumType::PerspectiveFrustum;
 	frustum.nearPlaneDistance = 1;

@@ -40,6 +40,8 @@ Component* GameObject::NewComponent(ComponentType type)
 		break;
 	case ComponentType::LIGHT:
 		break;
+	case ComponentType::CAMERA:
+		component = new ComponentCamera(this);
 	default:
 		break;
 	}

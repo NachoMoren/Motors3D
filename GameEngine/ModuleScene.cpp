@@ -118,6 +118,15 @@ void ModuleScene::DrawTree(GameObject* go) {
             }
             
         }
+        else if (ImGui::Button("Add camera")) {
+            go->NewComponent(ComponentType::CAMERA);
+        }
+        else if (ImGui::Button("Add transform")) {
+            go->NewComponent(ComponentType::TRANSFORM);
+        }
+        else if (ImGui::Button("Add mesh")) {
+            go->NewComponent(ComponentType::MESH);
+        }
         ImGui::EndPopup();
     }
 
