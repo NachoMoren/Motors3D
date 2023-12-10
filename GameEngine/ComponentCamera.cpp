@@ -42,3 +42,22 @@ void ComponentCamera::LookAt(float3 pos) {
 	float3 X = float3(0, 1, 0).Cross(frustum.front).Normalized();
 	frustum.up = frustum.front.Cross(X);
 }
+
+float3 ComponentCamera::GetPos()
+{
+	return frustum.pos;
+}
+
+void ComponentCamera::SetPos(float3 pos) {
+	frustum.pos = pos;
+}
+
+float ComponentCamera::GetAspectRatio() {
+
+	return frustum.AspectRatio();
+}
+
+void ComponentCamera::SetAspectRatio(float aspectRatio) {
+
+	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov * 0.5f) * aspectRatio);
+}

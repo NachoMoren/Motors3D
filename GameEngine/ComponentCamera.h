@@ -17,6 +17,13 @@ public:
 
 	void LookAt(float3 pos);
 
+	float3 GetPos();
+	void SetPos(float3 pos);
+
+	float GetAspectRatio();
+	void SetAspectRatio(float aspectRatio);
+
+
 public:
 
 	Frustum frustum;
